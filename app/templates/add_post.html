@@ -1,0 +1,46 @@
+{%extends 'base2.html'%}
+{%block body_block%}
+<div class="row" style="background: linear-gradient(120deg,#ee000073, #276c6ef7)">
+    <div class="col-4"></div>
+    <div class="col-4">
+        {%for m in messages%}
+        <!-- space is necessery -->
+        {%if m.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
+        <!-- bootsrap widget is alert dissmiss -->
+        <!-- also add js bundle -->
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{m}}!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {%endif%}
+        {%if m.level == DEFAULT_MESSAGE_LEVELS.SUCCESS%}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{m}}!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {%endif%}
+        {%endfor%}
+    </div>
+    <div class="col-4"></div>
+</div>
+
+<div style="background: linear-gradient(120deg,#ee000073, #276c6ef7); height: 593px;">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <h3 class="fw-bolder mb-0 me-5 mt-5 text-dark"><em> What's In Your Mind ?</em></h3>
+            <div class="mt-5">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    {{form.as_p}}
+                    <input type="submit" value="submit" class="btn btn-info">
+                </form>
+            </div>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
+
+
+{%endblock%}

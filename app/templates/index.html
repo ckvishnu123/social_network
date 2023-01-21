@@ -1,0 +1,99 @@
+{%extends 'base.html'%}
+{%block body_block%}
+<header class="bg-dark bg-opacity-75 py-5">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            {%for m in messages%}
+            <!-- space is necessery -->
+            {%if m.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
+            <!-- bootsrap widget is alert dissmiss -->
+            <!-- also add js bundle -->
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{m}}!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {%endif%}
+            {%if m.level == DEFAULT_MESSAGE_LEVELS.SUCCESS%}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{m}}!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {%endif%}
+            {%endfor%}
+        </div>
+        <div class="col-4"></div>
+    </div>
+    {%for post in posts%}
+    <div class="container px-5">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-8 col-xl-7 col-xxl-6">
+                <div class="my-2 text-center text-xl-start">
+                    
+                    <h1 class="display-5 fw-bolder text-white mb-2">{{post.title}}</h1>
+                    <p class="lead fw-normal text-white-50 mb-1"><em>Created by - {{post.user}}</em></p>
+                    <p class="lead fw-normal text-white-50 mb-1"><em>Created date - {{post.created_date}}</em></p>
+
+
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                        <!-- <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#!">Comments</a> -->
+                        <a class="btn btn-outline-light btn-lg px-4" href="{%url 'likes' post.id%}">Like</a>
+                        <span class="border rounded-pill ps-3 pe-3 bg-info border-success mt-3">
+                            <i class="fa-solid fa-thumbs-up"></i> {{post.like_count}}</span>
+                    </div>
+                    <form action="{%url 'comment' post.id%}" method="post" class="mt-3">
+                        {%csrf_token%}
+
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text"><input type="submit" value="add" class="btn btn-info"></span>
+                            <input type="text" name="comments" class="form-control" placeholder="Add your comment">
+                        </div>
+
+
+
+                    </form>
+
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne">
+                                    Comments
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body bg-dark bg-opacity-75">
+                                    {%for comment in post.post_comments%}
+                                    <div class="mt-2 text-center text-white me-5">
+                                        <div class="text-center">{{comment}}</div><em class="mb-3"> by {{comment.user}} </em><hr>
+                                    </div>
+                                    {%endfor%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-xl-5">
+                {%if post.image%}
+                    <img class="img-fluid rounded-3 my-4" 
+                    src="{{post.image.url}}" alt="...">
+                {%else%}
+                <img class="img-fluid rounded-3 my-4"
+                    src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." />
+                {%endif%}
+
+            </div>
+        </div>
+    </div>
+
+
+    {%endfor%}
+
+
+
+</header>
+{%endblock%}

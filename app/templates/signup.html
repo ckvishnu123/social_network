@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{%load static%}
+
+<!-- here load static to load that folder-->
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Signup</title>
+    <!-- in href add path to css -->
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+</head>
+
+<body>
+    <div class="center">
+        <h1>SignUP</h1>
+        <form method="post">
+            {%csrf_token%}
+            <div class="txt_field">
+                <!-- here name and id should be like this to work django defaults so add that-->
+                <input type="text" name="first_name" id="id_first_name" required>
+                <span></span>
+                <label>First name</label>
+            </div>
+            <div class="txt_field">
+                <input type="text" name="last_name" id="id_last_name" required>
+                <span></span>
+                <label>Last name</label>
+            </div>
+            <div class="txt_field">
+                <input type="email" name="email" id="id_email" required>
+                <span></span>
+                <label>Email</label>
+            </div>
+
+
+            <div class="txt_field">
+                <input type="text" name="username" id="id_username" required>
+                <span></span>
+                <label>Username</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" name="password1" id="id_password1" required>
+                <span></span>
+                <label>Password</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" name="password2" id="id_password2" required>
+                <span></span>
+                <label>Confirm password</label>
+            </div>
+
+            <input type="submit" value="Register">
+            <div class="signup_link">
+                <!-- redirect to sign in page -->
+                Already have an account? <a href="{%url 'signin'%}">Signin</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>
